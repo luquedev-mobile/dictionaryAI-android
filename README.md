@@ -1,1 +1,1 @@
-# dictionaryAI-android
+# dictionary AI
