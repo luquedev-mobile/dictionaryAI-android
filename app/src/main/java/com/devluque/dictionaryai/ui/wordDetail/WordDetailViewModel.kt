@@ -3,8 +3,6 @@ package com.devluque.dictionaryai.ui.wordDetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devluque.dictionaryai.data.AiRepository
-import com.devluque.dictionaryai.data.common.Content
-import com.devluque.dictionaryai.data.common.Part
 import com.devluque.dictionaryai.data.wordDetail.WordDetailRequest
 import com.devluque.dictionaryai.data.wordDetail.WordDetailResponseItem
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -68,6 +66,7 @@ class WordDetailViewModel : ViewModel() {
                     }
                 }
             } catch (e: Exception) {
+                val test = e
                 state.update {
                     it.copy(
                         loading = false,

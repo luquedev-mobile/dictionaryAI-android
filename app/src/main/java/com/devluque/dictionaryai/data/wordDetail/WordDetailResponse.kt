@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WordDetailResponseItem(
-    val meanings: List<Meaning>,
+    val meanings: List<Meaning>? = null,
     val word: String
 )
 
@@ -14,5 +14,5 @@ data class Meaning(
     val example_spanish: String? = null,
     val explanation: String? = null,
     val mean: String,
-    val type: String? = null
+    val partOfSpeech: String? = null
 )

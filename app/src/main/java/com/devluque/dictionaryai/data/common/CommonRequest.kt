@@ -15,5 +15,12 @@ data class Part(
 
 @Serializable
 data class ItemTypeString(
-    val type: String
+    val type: String,
+    val description: String? = null
+)
+
+@Serializable
+data class SafetySettings(
+    val category: String,
+    val threshold: String
 )

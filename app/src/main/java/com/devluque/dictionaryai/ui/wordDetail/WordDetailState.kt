@@ -32,7 +32,7 @@ class WordDetailState(
                     Content(
                         parts = listOf(
                             Part(
-                                text = "principales significados de la palabra '$word', siempre incluye los campos 'explanation', 'mean', 'example_english' y 'example_spanish'",
+                                text = "significados de '$word'",
                             )
                         ),
                         role = "user"
@@ -65,8 +65,8 @@ class WordDetailState(
 
     @Composable
     fun getMeaningAnnotatedString(meaning: Meaning, index: Int) = buildAnnotatedString {
-        meaning.type?.let {
-            append("${index}. ${meaning.type} ")
+        meaning.partOfSpeech?.let {
+            append("${index}. ${meaning.partOfSpeech} ")
         }?: run {
             append("${index}. ")
         }

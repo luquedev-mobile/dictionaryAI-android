@@ -2,6 +2,7 @@ package com.devluque.dictionaryai.data.wordDetail
 
 import com.devluque.dictionaryai.data.common.Content
 import com.devluque.dictionaryai.data.common.ItemTypeString
+import com.devluque.dictionaryai.data.common.SafetySettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,7 +10,8 @@ import kotlinx.serialization.Serializable
 data class WordDetailRequest(
     var contents: MutableList<Content>,
     val systemInstruction: Content,
-    val generationConfig: WordDetailGenerationConfig
+    val generationConfig: WordDetailGenerationConfig,
+    val safetySettings: List<SafetySettings>
 )
 
 @Serializable
@@ -24,13 +26,16 @@ data class WordDetailGenerationConfig(
 @Serializable
 data class WordDetailResponseSchema(
     val items: WordDetailItemsSchema,
-    val type: String
+    val type: String,
+    val nullable: String
 )
 
 @Serializable
 data class WordDetailItemsSchema(
     val properties: WordDetailProperties,
-    val type: String
+    val type: String,
+    val required: List<String>,
+    val nullable: String
 )
 
 @Serializable
@@ -42,13 +47,15 @@ data class WordDetailProperties(
 @Serializable
 data class Meanings(
     val items: WordDetailItemsProperties,
-    val type: String
+    val type: String,
+    val nullable: String
 )
 
 @Serializable
 data class WordDetailItemsProperties(
     val properties: WordDetailMeaningProperties,
-    val type: String
+    val type: String,
+    val required: List<String>
 )
 
 @Serializable
@@ -59,5 +66,5 @@ data class WordDetailMeaningProperties(
     val exampleSpanish: ItemTypeString,
     val explanation: ItemTypeString,
     val mean: ItemTypeString,
-    val type: ItemTypeString
+    val partOfSpeech: ItemTypeString
 )

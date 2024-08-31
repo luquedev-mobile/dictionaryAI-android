@@ -13,24 +13,52 @@
     "response_mime_type": "application/json",
     "response_schema": {
       "type": "array",
+      "nullable": "false",
       "items": {
         "type": "object",
+        "nullable": "false",
         "properties": {
-          "word": {"type":"STRING"},
+          "word": {
+            "type": "STRING"
+          },
           "meanings": {
             "type": "array",
+            "nullable": "false",
             "items": {
               "type": "object",
               "properties": {
-                "mean": {"type":"STRING"},
-                "example_english": {"type":"STRING"},
-                "example_spanish": {"type":"STRING"},
-                "explanation": {"type":"STRING"},
-                "type": {"type":"STRING"}
-              }
+                "mean": {
+                  "type": "STRING",
+                  "description": "traduccion de la palabra o de la frase al español"
+                },
+                "example_english": {
+                  "type": "STRING"
+                },
+                "example_spanish": {
+                  "type": "STRING"
+                },
+                "explanation": {
+                  "type": "STRING",
+                  "description": "explicacion del significado de la palabra en español"
+                },
+                "partOfSpeech": {
+                  "type": "STRING"
+                }
+              },
+              "required": [
+                "mean",
+                "example_english",
+                "example_spanish",
+                "explanation",
+                "partOfSpeech"
+              ]
             }
           }
-        }
+        },
+        "required": [
+          "word",
+          "meanings"
+        ]
       }
     },
     "temperature": 2.0
@@ -42,5 +70,23 @@
       }
     ],
     "role": "model"
-  }
+  },
+  "safetySettings": [
+    {
+      "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+      "threshold": "BLOCK_NONE"
+    }
+  ]
 }
