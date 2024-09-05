@@ -12,54 +12,50 @@
   "generationConfig": {
     "response_mime_type": "application/json",
     "response_schema": {
-      "type": "array",
+      "type": "object",
       "nullable": "false",
-      "items": {
-        "type": "object",
-        "nullable": "false",
-        "properties": {
-          "word": {
-            "type": "STRING"
-          },
-          "meanings": {
-            "type": "array",
-            "nullable": "false",
-            "items": {
-              "type": "object",
-              "properties": {
-                "mean": {
-                  "type": "STRING",
-                  "description": "traduccion de la palabra o de la frase al español"
-                },
-                "example_english": {
-                  "type": "STRING"
-                },
-                "example_spanish": {
-                  "type": "STRING"
-                },
-                "explanation": {
-                  "type": "STRING",
-                  "description": "explicacion del significado de la palabra en español"
-                },
-                "partOfSpeech": {
-                  "type": "STRING"
-                }
-              },
-              "required": [
-                "mean",
-                "example_english",
-                "example_spanish",
-                "explanation",
-                "partOfSpeech"
-              ]
-            }
-          }
+      "properties": {
+        "word": {
+          "type": "STRING"
         },
-        "required": [
-          "word",
-          "meanings"
-        ]
-      }
+        "meanings": {
+          "type": "array",
+          "nullable": "false",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mean": {
+                "type": "STRING",
+                "description": "traduccion de la palabra o de la frase al español"
+              },
+              "example_english": {
+                "type": "STRING"
+              },
+              "example_spanish": {
+                "type": "STRING"
+              },
+              "explanation": {
+                "type": "STRING",
+                "description": "explicacion del significado de la palabra en español"
+              },
+              "partOfSpeech": {
+                "type": "STRING"
+              }
+            },
+            "required": [
+              "mean",
+              "example_english",
+              "example_spanish",
+              "explanation",
+              "partOfSpeech"
+            ]
+          }
+        }
+      },
+      "required": [
+        "word",
+        "meanings"
+      ]
     },
     "temperature": 2.0
   },

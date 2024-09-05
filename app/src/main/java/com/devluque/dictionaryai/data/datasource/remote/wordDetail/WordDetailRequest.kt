@@ -1,8 +1,8 @@
-package com.devluque.dictionaryai.data.wordDetail
+package com.devluque.dictionaryai.data.datasource.remote.wordDetail
 
-import com.devluque.dictionaryai.data.common.Content
-import com.devluque.dictionaryai.data.common.ItemTypeString
-import com.devluque.dictionaryai.data.common.SafetySettings
+import com.devluque.dictionaryai.data.datasource.remote.common.Content
+import com.devluque.dictionaryai.data.datasource.remote.common.ItemTypeString
+import com.devluque.dictionaryai.data.datasource.remote.common.SafetySettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,13 +25,6 @@ data class WordDetailGenerationConfig(
 
 @Serializable
 data class WordDetailResponseSchema(
-    val items: WordDetailItemsSchema,
-    val type: String,
-    val nullable: String
-)
-
-@Serializable
-data class WordDetailItemsSchema(
     val properties: WordDetailProperties,
     val type: String,
     val required: List<String>,

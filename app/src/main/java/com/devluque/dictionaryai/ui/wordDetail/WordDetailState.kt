@@ -1,25 +1,33 @@
 package com.devluque.dictionaryai.ui.wordDetail
 
+import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import com.devluque.dictionaryai.data.common.Content
-import com.devluque.dictionaryai.data.common.Part
-import com.devluque.dictionaryai.data.wordDetail.Meaning
-import com.devluque.dictionaryai.data.wordDetail.WordDetailRequest
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import com.devluque.dictionaryai.data.model.Meaning
+import com.devluque.dictionaryai.data.datasource.remote.common.Content
+import com.devluque.dictionaryai.data.datasource.remote.common.Part
+import com.devluque.dictionaryai.data.datasource.remote.wordDetail.WordDetailRequest
 import com.devluque.dictionaryai.ui.common.readFile.ManagerJsonFile
 import com.devluque.dictionaryai.ui.theme.getColorScheme
+import kotlinx.coroutines.flow.Flow
+import java.util.Locale
 
 class WordDetailState(
-    var lastRequest: MutableState<() -> Unit>
+    var lastRequest: MutableState<() -> Unit>,
+    val events: Flow<WordDetailViewModel.WordDetailEvent>
 ) {
     @Composable
     fun GetWordDetailRequest(
@@ -43,6 +51,32 @@ class WordDetailState(
             },
             fileName = "wordDetailRequest.json"
         )
+    }
+
+    @Composable
+    fun TextToSpeechEvent() {
+        val context = LocalContext.current
+        val textToSpeech = remember {
+            TextToSpeech(context, null)
+        }
+
+        val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+        LaunchedEffect(lifecycleOwner) {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                events.collect { event ->
+                    when (event) {
+                        is WordDetailViewModel.WordDetailEvent.Speak -> {
+                            textToSpeech.setSpeechRate(event.speakerModer.speechRate)
+                            @Suppress("DEPRECATION")
+                            if (textToSpeech.language.isO3Language != Locale.UK.isO3Language) {
+                                textToSpeech.language = Locale.UK
+                            }
+                            textToSpeech.speak(event.text, TextToSpeech.QUEUE_FLUSH, null, null)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun getTitleAnnotatedString(word: String) = buildAnnotatedString {
@@ -85,18 +119,18 @@ class WordDetailState(
     }
 
     fun getExampleAnnotatedString(meaning: Meaning) = buildAnnotatedString {
-        meaning.example_english?.let {
+        meaning.exampleEnglish?.let {
             withStyle(
                 SpanStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight(500)
                 )
             ) {
-                append("· ${meaning.example_english}")
+                append("· ${meaning.exampleEnglish}")
             }
         }
-        meaning.example_spanish?.let {
-            append(" (${meaning.example_spanish})")
+        meaning.exampleSpanish?.let {
+            append(" (${meaning.exampleSpanish})")
         }
     }
 }
@@ -104,9 +138,10 @@ class WordDetailState(
 @Composable
 fun rememberWordDetailState(
     lazyGridState: LazyGridState = rememberLazyGridState(),
-    lastRequest: MutableState<() -> Unit> = remember { mutableStateOf({}) }
+    lastRequest: MutableState<() -> Unit> = remember { mutableStateOf({}) },
+    events: Flow<WordDetailViewModel.WordDetailEvent>
 ): WordDetailState {
     return remember(lazyGridState) {
-        WordDetailState(lastRequest)
+        WordDetailState(lastRequest, events)
     }
 }

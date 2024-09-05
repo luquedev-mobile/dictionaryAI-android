@@ -13,15 +13,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.devluque.dictionaryai.App
+import com.devluque.dictionaryai.data.AiRepository
+import com.devluque.dictionaryai.data.WordsRepository
+import com.devluque.dictionaryai.data.datasource.AiRemoteDataSource
+import com.devluque.dictionaryai.data.datasource.WordsLocalDataSource
 import com.devluque.dictionaryai.ui.common.topBar.TopAppBarOvalShape
 import com.devluque.dictionaryai.ui.common.topBar.TopBar
 import com.devluque.dictionaryai.ui.search.SearchScreen
+import com.devluque.dictionaryai.ui.search.SearchViewModel
 import com.devluque.dictionaryai.ui.theme.DictionaryAITheme
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 import com.devluque.dictionaryai.ui.wordDetail.WordDetail
@@ -46,6 +53,7 @@ fun AppScaffold() {
     systemUiController.setStatusBarColor(getColorScheme().primary)
     var showBottomBar by remember { mutableStateOf(true) }
     var topAppBar by remember { mutableStateOf<@Composable () -> Unit>({}) }
+    val application = LocalContext.current.applicationContext as App
 
     DictionaryAITheme(
         dynamicColor = false
@@ -73,6 +81,15 @@ fun AppScaffold() {
                             SearchScreen(
                                 onSearch = {
                                     navController.navigate(NavScreen.WordDetail.createRoute(it))
+                                },
+                                vm = viewModel {
+                                    SearchViewModel(
+                                        wordsRepository = WordsRepository(
+                                            localDataSource = WordsLocalDataSource(
+                                                application.db.wordsDao
+                                            )
+                                        )
+                                    )
                                 }
                             )
                         }
@@ -83,6 +100,7 @@ fun AppScaffold() {
                                 type = NavType.StringType
                             })
                         ) { backStackEntry ->
+                            val context = LocalContext.current
                             showBottomBar = false
                             val word =
                                 requireNotNull(backStackEntry.arguments?.getString(NavArgs.Word.key))
@@ -94,7 +112,11 @@ fun AppScaffold() {
                             WordDetail(
                                 word = word,
                                 viewModel = viewModel {
-                                    WordDetailViewModel()
+                                    WordDetailViewModel(
+                                        aiRepository = AiRepository(
+                                            aiRemoteDataSource = AiRemoteDataSource()
+                                        )
+                                    )
                                 }
                             )
                         }

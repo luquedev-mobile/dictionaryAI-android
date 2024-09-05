@@ -1,5 +1,6 @@
-package com.devluque.dictionaryai.data.generateContent
-import com.devluque.dictionaryai.data.common.Content
+package com.devluque.dictionaryai.data.datasource.remote.generateContent
+
+import com.devluque.dictionaryai.data.datasource.remote.common.Content
 import kotlinx.serialization.Serializable
 
 @Serializable

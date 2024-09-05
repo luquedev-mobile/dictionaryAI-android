@@ -1,12 +1,16 @@
-package com.devluque.dictionaryai.data
+package com.devluque.dictionaryai.data.datasource.remote
 
 import com.devluque.dictionaryai.BuildConfig
+import com.devluque.dictionaryai.Result
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
+import java.net.SocketTimeoutException
 
 object AiClient {
     private val okHttpClient = okhttp3.OkHttpClient.Builder()
@@ -38,3 +42,21 @@ private fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
         )
         .build()
 )
+
+fun <T> Response<T>.resultRequest(): Result<T> {
+    return try {
+        if (isSuccessful) {
+            body()?.let {
+                Result.Success(it)
+            }?: run {
+                Result.Error(NullPointerException())
+            }
+        } else {
+            Result.Error(HttpException(this))
+        }
+    } catch (e: SocketTimeoutException) {
+        Result.Error(e)
+    } catch (e: Exception) {
+        Result.Error(e)
+    }
+}

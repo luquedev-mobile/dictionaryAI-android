@@ -2,78 +2,91 @@ package com.devluque.dictionaryai.ui.wordDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devluque.dictionaryai.Result
 import com.devluque.dictionaryai.data.AiRepository
-import com.devluque.dictionaryai.data.wordDetail.WordDetailRequest
-import com.devluque.dictionaryai.data.wordDetail.WordDetailResponseItem
+import com.devluque.dictionaryai.data.model.WordDetailItem
+import com.devluque.dictionaryai.data.datasource.remote.wordDetail.WordDetailRequest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 
-class WordDetailViewModel : ViewModel() {
-    var state = MutableStateFlow(UiState())
-        private set
-    private lateinit var historicalRequest: WordDetailRequest
+enum class SpeakerModer(val speechRate: Float) {
+    Slow(0.2f),
+    Normal(1f)
+}
 
-    private val repository = AiRepository()
+class WordDetailViewModel(
+    private val aiRepository: AiRepository
+) : ViewModel() {
+    private val controlUi = MutableStateFlow(ControlUi())
 
-    data class UiState(
-        val wordDetail: WordDetailResponseItem? = null,
-        val loading: Boolean = false,
-        val error: Boolean = false
+    sealed class WordDetailEvent {
+        data class Speak(
+            val text: String,
+            val speakerModer: SpeakerModer
+        ) : WordDetailEvent()
+    }
+
+    private var _events = Channel<WordDetailEvent>()
+    val events = _events.receiveAsFlow()
+
+    data class ControlUi(
+        val isGettingData: Boolean = false,
+        val historicalRequest: WordDetailRequest? = null
     )
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val uiState: StateFlow<Result<WordDetailItem>> =
+        controlUi
+            .filter { it.historicalRequest != null && it.isGettingData }
+            .flatMapLatest { request ->
+                flow {
+                    emit(Result.Loading)
+                    request.historicalRequest?.let { request ->
+                        emitAll(
+                            aiRepository.generateWordDetail(request).also {
+                                controlUi.update {
+                                    it.copy(
+                                        isGettingData = false
+                                    )
+                                }
+                            }
+                        )
+                    } ?: run {
+                        emit(Result.Error(Exception("Request is null")))
+                    }
+                }
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = Result.Loading
+            )
+
     fun init(wordDetailRequest: WordDetailRequest) {
-        historicalRequest = wordDetailRequest
-        getContent()
+        controlUi.update {
+            it.copy(
+                historicalRequest = wordDetailRequest,
+                isGettingData = true
+            )
+        }
+    }
+
+    fun speak(text: String, speakerModer: SpeakerModer = SpeakerModer.Normal) {
+        _events.trySend(WordDetailEvent.Speak(text, speakerModer))
     }
 
     fun refresh() {
-        getContent()
-    }
-
-    private fun getContent() {
-        viewModelScope.launch {
-            state.update {
-                it.copy(
-                    loading = true,
-                    error = false
-                )
-            }
-            try {
-                val response = repository.generateWordDetail(
-                    wordDetailRequest = historicalRequest
-                )
-
-                response?.let {
-                    val responseJson =
-                        Json.decodeFromString<List<WordDetailResponseItem>>(
-                            response.candidates[0].content.parts[0].text
-                        )
-
-                    state.update {
-                        it.copy(
-                            loading = false,
-                            wordDetail = responseJson[0]
-                        )
-                    }
-                } ?: run {
-                    state.update {
-                        it.copy(
-                            loading = false,
-                            error = true
-                        )
-                    }
-                }
-            } catch (e: Exception) {
-                val test = e
-                state.update {
-                    it.copy(
-                        loading = false,
-                        error = true
-                    )
-                }
-            }
+        controlUi.update {
+            it.copy(isGettingData = true)
         }
     }
 }
