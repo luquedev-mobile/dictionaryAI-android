@@ -29,17 +29,20 @@
                 "description": "traduccion de la palabra o de la frase al español"
               },
               "example_english": {
-                "type": "STRING"
+                "type": "STRING",
+                "description": "ejemplo en inglés que incluye la palabra dentro del campo 'word'"
               },
               "example_spanish": {
-                "type": "STRING"
+                "type": "STRING",
+                "description": "traducción del campo 'example_english'"
               },
               "explanation": {
                 "type": "STRING",
-                "description": "explicacion del significado de la palabra en español"
+                "description": "explicación del significado del campo 'mean' en español y si es un verbo indicar el tiempo en el que está e indicar sus otros tiempos verbales"
               },
               "partOfSpeech": {
-                "type": "STRING"
+                "type": "STRING",
+                "description": "categoría gramatical del campo 'mean'"
               }
             },
             "required": [

@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import com.devluque.dictionaryai.R
 import com.devluque.dictionaryai.data.model.Word
 import com.devluque.dictionaryai.data.model.toWord
-import com.devluque.dictionaryai.ui.common.swipeBox.SwipeBox
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 
 @Composable
@@ -165,33 +164,30 @@ private fun WordItem(
     onSearch: (String) -> Unit,
     mustShowDivider: Boolean
 ) {
-    SwipeBox(
-        swipeDone = {
-            onDelete(word)
-        }
-    ) {
-        Column {
-            ListItem(
-                headlineContent = {
-                    Item(
-                        word = word.word,
-                        onClick = { word ->
-                            onSearch(word)
+    Column {
+        ListItem(
+            headlineContent = {
+                Item(
+                    word = word.word,
+                    onClick = { word ->
+                        onSearch(word)
+                    }
+                )
+            },
+            trailingContent = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_x),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(16.dp)
+                        .clickable {
+                            onDelete(word)
                         }
-                    )
-                },
-                trailingContent = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_right),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(16.dp)
-                    )
-                }
-            )
-            if (mustShowDivider) {
-                HorizontalDivider()
+                )
             }
+        )
+        if (mustShowDivider) {
+            HorizontalDivider()
         }
     }
 }
