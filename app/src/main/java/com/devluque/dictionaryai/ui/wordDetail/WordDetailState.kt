@@ -16,10 +16,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.devluque.dictionaryai.data.model.Meaning
-import com.devluque.dictionaryai.data.datasource.remote.common.Content
-import com.devluque.dictionaryai.data.datasource.remote.common.Part
-import com.devluque.dictionaryai.data.datasource.remote.wordDetail.WordDetailRequest
+import com.devluque.dictionaryai.domain.Meaning
+import com.devluque.dictionaryai.framework.remote.common.Content
+import com.devluque.dictionaryai.framework.remote.common.Part
+import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
 import com.devluque.dictionaryai.ui.common.readFile.ManagerJsonFile
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 import kotlinx.coroutines.flow.Flow

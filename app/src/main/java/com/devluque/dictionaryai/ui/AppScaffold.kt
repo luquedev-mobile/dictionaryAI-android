@@ -23,8 +23,9 @@ import androidx.navigation.navArgument
 import com.devluque.dictionaryai.App
 import com.devluque.dictionaryai.data.AiRepository
 import com.devluque.dictionaryai.data.WordsRepository
-import com.devluque.dictionaryai.data.datasource.AiRemoteDataSource
-import com.devluque.dictionaryai.data.datasource.WordsLocalDataSource
+import com.devluque.dictionaryai.framework.remote.AiClient
+import com.devluque.dictionaryai.framework.WordsRoomDataSource
+import com.devluque.dictionaryai.framework.AiServerDataSource
 import com.devluque.dictionaryai.ui.common.topBar.TopAppBarOvalShape
 import com.devluque.dictionaryai.ui.common.topBar.TopBar
 import com.devluque.dictionaryai.ui.search.SearchScreen
@@ -33,6 +34,11 @@ import com.devluque.dictionaryai.ui.theme.DictionaryAITheme
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 import com.devluque.dictionaryai.ui.wordDetail.WordDetail
 import com.devluque.dictionaryai.ui.wordDetail.WordDetailViewModel
+import com.devluque.dictionaryai.usecases.DeleteWordUseCase
+import com.devluque.dictionaryai.usecases.FetchGenerateWordDetailUseCase
+import com.devluque.dictionaryai.usecases.GetRecentWordsUseCase
+import com.devluque.dictionaryai.usecases.InsertWordUseCase
+import com.devluque.dictionaryai.usecases.SearchWordsUseCase
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 sealed class NavScreen(val route: String) {
@@ -76,6 +82,12 @@ fun AppScaffold() {
                         startDestination = NavScreen.Search.route
                     ) {
                         composable(NavScreen.Search.route) {
+                            val wordsRepository = WordsRepository(
+                                localDataSource = WordsRoomDataSource(
+                                    application.db.wordsDao
+                                )
+                            )
+
                             showBottomBar = true
                             topAppBar = { TopAppBarOvalShape() }
                             SearchScreen(
@@ -84,11 +96,10 @@ fun AppScaffold() {
                                 },
                                 vm = viewModel {
                                     SearchViewModel(
-                                        wordsRepository = WordsRepository(
-                                            localDataSource = WordsLocalDataSource(
-                                                application.db.wordsDao
-                                            )
-                                        )
+                                        getRecentWordsUseCase = GetRecentWordsUseCase(wordsRepository),
+                                        searchWordsUseCase = SearchWordsUseCase(wordsRepository),
+                                        insertWordUseCase = InsertWordUseCase(wordsRepository),
+                                        deleteWordUseCase = DeleteWordUseCase(wordsRepository)
                                     )
                                 }
                             )
@@ -113,8 +124,12 @@ fun AppScaffold() {
                                 word = word,
                                 viewModel = viewModel {
                                     WordDetailViewModel(
-                                        aiRepository = AiRepository(
-                                            aiRemoteDataSource = AiRemoteDataSource()
+                                        fetchGenerateWordDetailUseCase = FetchGenerateWordDetailUseCase(
+                                            AiRepository(
+                                                aiRemoteDataSource = AiServerDataSource(
+                                                    AiClient.instance
+                                                )
+                                            )
                                         )
                                     )
                                 }

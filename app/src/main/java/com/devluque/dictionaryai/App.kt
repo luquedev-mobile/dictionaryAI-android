@@ -2,7 +2,7 @@ package com.devluque.dictionaryai
 
 import android.app.Application
 import androidx.room.Room
-import com.devluque.dictionaryai.data.datasource.database.DictionaryDataBase
+import com.devluque.dictionaryai.framework.database.DictionaryDataBase
 
 class App: Application() {
     lateinit var db: DictionaryDataBase

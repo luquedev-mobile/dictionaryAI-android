@@ -3,9 +3,9 @@ package com.devluque.dictionaryai.ui.wordDetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devluque.dictionaryai.Result
-import com.devluque.dictionaryai.data.AiRepository
-import com.devluque.dictionaryai.data.model.WordDetailItem
-import com.devluque.dictionaryai.data.datasource.remote.wordDetail.WordDetailRequest
+import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
+import com.devluque.dictionaryai.domain.WordDetailItem
+import com.devluque.dictionaryai.usecases.FetchGenerateWordDetailUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ enum class SpeakerModer(val speechRate: Float) {
 }
 
 class WordDetailViewModel(
-    private val aiRepository: AiRepository
+    private val fetchGenerateWordDetailUseCase: FetchGenerateWordDetailUseCase
 ) : ViewModel() {
     private val controlUi = MutableStateFlow(ControlUi())
 
@@ -53,7 +53,7 @@ class WordDetailViewModel(
                     emit(Result.Loading)
                     request.historicalRequest?.let { request ->
                         emitAll(
-                            aiRepository.generateWordDetail(request).also {
+                            fetchGenerateWordDetailUseCase(request).also {
                                 controlUi.update {
                                     it.copy(
                                         isGettingData = false

@@ -1,16 +1,16 @@
-package com.devluque.dictionaryai.data.model
+package com.devluque.dictionaryai.framework.remote
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WordDetailItem(
-    val meanings: List<Meaning>? = null,
+data class RemoteWordDetailItem(
+    val meanings: List<RemoteMeaning>? = null,
     val word: String
 )
 
 @Serializable
-data class Meaning(
+data class RemoteMeaning(
     @SerialName("example_english")
     val exampleEnglish: String? = null,
     @SerialName("example_spanish")

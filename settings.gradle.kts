@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "dictionaryAI"
 include(":app")
- 
+include(":domain")

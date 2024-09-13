@@ -2,8 +2,11 @@ package com.devluque.dictionaryai.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devluque.dictionaryai.data.model.Word
-import com.devluque.dictionaryai.data.WordsRepository
+import com.devluque.dictionaryai.domain.Word
+import com.devluque.dictionaryai.usecases.DeleteWordUseCase
+import com.devluque.dictionaryai.usecases.GetRecentWordsUseCase
+import com.devluque.dictionaryai.usecases.InsertWordUseCase
+import com.devluque.dictionaryai.usecases.SearchWordsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,9 +18,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
-    private val wordsRepository: WordsRepository
+    getRecentWordsUseCase: GetRecentWordsUseCase,
+    private val searchWordsUseCase: SearchWordsUseCase,
+    private val insertWordUseCase: InsertWordUseCase,
+    private val deleteWordUseCase: DeleteWordUseCase,
 ): ViewModel() {
-    private val recentWords: Flow<List<Word>> = wordsRepository.getRecentWords
+    private val recentWords: Flow<List<Word>> = getRecentWordsUseCase()
     private val searchWords: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -27,7 +33,7 @@ class SearchViewModel(
                 if (query.isEmpty()) {
                     recentWords
                 } else {
-                    wordsRepository.searchWords(query)
+                    searchWordsUseCase(query)
                 }
             }
         .stateIn(
@@ -42,14 +48,14 @@ class SearchViewModel(
         }
     }
 
-    fun insertWord(word: Word) {
+    fun insertWord(word: String) {
         viewModelScope.launch {
-            wordsRepository.insertWord(word)
+            insertWordUseCase(word)
         }
     }
     fun deleteWord(word: String) {
         viewModelScope.launch {
-            wordsRepository.deleteWord(word)
+            deleteWordUseCase(word)
         }
     }
 }

@@ -1,7 +1,7 @@
-package com.devluque.dictionaryai.data.datasource.remote
+package com.devluque.dictionaryai.framework.remote
 
-import com.devluque.dictionaryai.data.datasource.remote.generateContent.GenerateContentResponse
-import com.devluque.dictionaryai.data.datasource.remote.wordDetail.WordDetailRequest
+import com.devluque.dictionaryai.framework.remote.generateContent.GenerateContentResponse
+import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

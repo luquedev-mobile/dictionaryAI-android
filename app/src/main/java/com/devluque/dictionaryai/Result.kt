@@ -8,6 +8,14 @@ sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
     data class Error(val throwable: Throwable) : Result<Nothing>
     data object Loading : Result<Nothing>
+
+    fun <R> map(transform: (T) -> R): Result<R> {
+        return when (this) {
+            is Success -> Success(transform(data))
+            is Error -> this
+            else -> Loading
+        }
+    }
 }
 
 @OptIn(ExperimentalContracts::class)

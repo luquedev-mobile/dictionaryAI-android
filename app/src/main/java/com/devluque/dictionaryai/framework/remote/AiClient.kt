@@ -1,4 +1,4 @@
-package com.devluque.dictionaryai.data.datasource.remote
+package com.devluque.dictionaryai.framework.remote
 
 import com.devluque.dictionaryai.BuildConfig
 import com.devluque.dictionaryai.Result

@@ -1,8 +1,8 @@
-package com.devluque.dictionaryai.data.datasource.remote.wordDetail
+package com.devluque.dictionaryai.framework.remote.wordDetail
 
-import com.devluque.dictionaryai.data.datasource.remote.common.Content
-import com.devluque.dictionaryai.data.datasource.remote.common.ItemTypeString
-import com.devluque.dictionaryai.data.datasource.remote.common.SafetySettings
+import com.devluque.dictionaryai.framework.remote.common.Content
+import com.devluque.dictionaryai.framework.remote.common.ItemTypeString
+import com.devluque.dictionaryai.framework.remote.common.SafetySettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -33,8 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devluque.dictionaryai.R
-import com.devluque.dictionaryai.data.model.Word
-import com.devluque.dictionaryai.data.model.toWord
+import com.devluque.dictionaryai.domain.Word
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 
 @Composable
@@ -61,7 +60,7 @@ fun SearchScreen(
                 .align(Alignment.CenterHorizontally),
             onClick = {
                 vm.insertWord(
-                    searchState.searchText.value.toWord()
+                    searchState.searchText.value
                 )
                 onSearch(searchState.searchText.value)
             }
