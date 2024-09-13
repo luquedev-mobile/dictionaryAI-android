@@ -1,7 +1,7 @@
 package com.devluque.dictionaryai.framework.remote
 
 import com.devluque.dictionaryai.framework.remote.generateContent.GenerateContentResponse
-import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
+import com.devluque.domain.remote.worddetail.RemoteWordDetailRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -11,6 +11,6 @@ interface AiService {
     @POST("models/{model}:generateContent")
     suspend fun generateWordDetail(
         @Path("model") model: String = "gemini-1.5-flash-latest",
-        @Body wordDetailRequest: WordDetailRequest
+        @Body remoteWordDetailRequest: RemoteWordDetailRequest
     ): Response<GenerateContentResponse>
 }

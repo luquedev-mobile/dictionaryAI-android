@@ -2,11 +2,11 @@ package com.devluque.dictionaryai.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devluque.dictionaryai.domain.Word
-import com.devluque.dictionaryai.usecases.DeleteWordUseCase
-import com.devluque.dictionaryai.usecases.GetRecentWordsUseCase
-import com.devluque.dictionaryai.usecases.InsertWordUseCase
-import com.devluque.dictionaryai.usecases.SearchWordsUseCase
+import com.devluque.domain.Word
+import com.devluque.usecases.DeleteWordUseCase
+import com.devluque.usecases.GetRecentWordsUseCase
+import com.devluque.usecases.InsertWordUseCase
+import com.devluque.usecases.SearchWordsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

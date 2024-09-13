@@ -1,6 +1,6 @@
-package com.devluque.dictionaryai.data.datasource
+package com.devluque.data.datasource
 
-import com.devluque.dictionaryai.domain.Word
+import com.devluque.domain.Word
 import kotlinx.coroutines.flow.Flow
 
 interface WordsLocalDataSource {

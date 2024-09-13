@@ -16,10 +16,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.devluque.dictionaryai.domain.Meaning
-import com.devluque.dictionaryai.framework.remote.common.Content
-import com.devluque.dictionaryai.framework.remote.common.Part
-import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
+import com.devluque.domain.Meaning
+import com.devluque.domain.remote.common.Content
+import com.devluque.domain.remote.common.Part
+import com.devluque.domain.remote.worddetail.RemoteWordDetailRequest
 import com.devluque.dictionaryai.ui.common.readFile.ManagerJsonFile
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 import kotlinx.coroutines.flow.Flow
@@ -32,9 +32,9 @@ class WordDetailState(
     @Composable
     fun GetWordDetailRequest(
         word: String,
-        getContent: (WordDetailRequest?) -> Unit
+        getContent: (RemoteWordDetailRequest?) -> Unit
     ) {
-        ManagerJsonFile<WordDetailRequest>(
+        ManagerJsonFile<RemoteWordDetailRequest>(
             getContent = { wordDetailRequest ->
                 wordDetailRequest?.contents = mutableListOf(
                     Content(

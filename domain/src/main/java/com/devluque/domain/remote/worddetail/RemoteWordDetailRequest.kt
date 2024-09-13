@@ -1,13 +1,13 @@
-package com.devluque.dictionaryai.framework.remote.wordDetail
+package com.devluque.domain.remote.worddetail
 
-import com.devluque.dictionaryai.framework.remote.common.Content
-import com.devluque.dictionaryai.framework.remote.common.ItemTypeString
-import com.devluque.dictionaryai.framework.remote.common.SafetySettings
+import com.devluque.domain.remote.common.Content
+import com.devluque.domain.remote.common.ItemTypeString
+import com.devluque.domain.remote.common.SafetySettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WordDetailRequest(
+data class RemoteWordDetailRequest(
     var contents: MutableList<Content>,
     val systemInstruction: Content,
     val generationConfig: WordDetailGenerationConfig,

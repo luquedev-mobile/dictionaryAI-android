@@ -1,7 +1,7 @@
 package com.devluque.dictionaryai.ui
 
 import androidx.compose.runtime.Composable
-import com.devluque.dictionaryai.Result
+import com.devluque.domain.Result
 import com.devluque.dictionaryai.ui.common.error.ErrorScreen
 import com.devluque.dictionaryai.ui.common.loading.Loading
 

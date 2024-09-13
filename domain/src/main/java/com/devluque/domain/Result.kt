@@ -1,8 +1,9 @@
-package com.devluque.dictionaryai
+package com.devluque.domain
 
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+
 
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>

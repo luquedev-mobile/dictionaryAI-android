@@ -1,6 +1,6 @@
-package com.devluque.dictionaryai.usecases
+package com.devluque.usecases
 
-import com.devluque.dictionaryai.data.WordsRepository
+import com.devluque.data.WordsRepository
 
 class DeleteWordUseCase(
     private val wordsRepository: WordsRepository

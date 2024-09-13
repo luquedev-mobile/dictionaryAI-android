@@ -1,7 +1,7 @@
-package com.devluque.dictionaryai.usecases
+package com.devluque.usecases
 
-import com.devluque.dictionaryai.data.WordsRepository
-import com.devluque.dictionaryai.domain.Word
+import com.devluque.data.WordsRepository
+import com.devluque.domain.Word
 import kotlinx.coroutines.flow.Flow
 
 class SearchWordsUseCase(

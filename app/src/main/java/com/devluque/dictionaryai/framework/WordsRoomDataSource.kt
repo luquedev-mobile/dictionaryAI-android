@@ -1,7 +1,7 @@
 package com.devluque.dictionaryai.framework
 
-import com.devluque.dictionaryai.data.datasource.WordsLocalDataSource
-import com.devluque.dictionaryai.domain.Word
+import com.devluque.data.datasource.WordsLocalDataSource
+import com.devluque.domain.Word
 import com.devluque.dictionaryai.framework.database.DbWord
 import com.devluque.dictionaryai.framework.database.WordsDao
 import kotlinx.coroutines.flow.Flow

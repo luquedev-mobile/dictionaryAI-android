@@ -1,17 +1,17 @@
 package com.devluque.dictionaryai.framework
 
-import com.devluque.dictionaryai.Result
-import com.devluque.dictionaryai.data.datasource.AiRemoteDataSource
+import com.devluque.domain.Result
+import com.devluque.data.datasource.AiRemoteDataSource
 import com.devluque.dictionaryai.framework.remote.generateContent.GenerateContentResponse
-import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
-import com.devluque.dictionaryai.domain.Meaning
-import com.devluque.dictionaryai.domain.WordDetailItem
+import com.devluque.domain.remote.worddetail.RemoteWordDetailRequest
+import com.devluque.domain.Meaning
+import com.devluque.domain.WordDetailItem
 import com.devluque.dictionaryai.framework.remote.AiService
 import com.devluque.dictionaryai.framework.remote.RemoteMeaning
 import com.devluque.dictionaryai.framework.remote.RemoteWordDetailItem
 import com.devluque.dictionaryai.framework.remote.resultRequest
-import com.devluque.dictionaryai.isSuccess
-import com.devluque.dictionaryai.onFailure
+import com.devluque.domain.isSuccess
+import com.devluque.domain.onFailure
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -21,13 +21,13 @@ class AiServerDataSource(
     private val aiService: AiService
 ) : AiRemoteDataSource {
     override fun generateWordDetail(
-        wordDetailRequest: WordDetailRequest
+        remoteWordDetailRequest: RemoteWordDetailRequest
     ): Flow<Result<WordDetailItem>> = flow {
         safetyCall(
             apiCall = {
                 aiService
                     .generateWordDetail(
-                        wordDetailRequest = wordDetailRequest
+                        remoteWordDetailRequest = remoteWordDetailRequest
                     )
                     .resultRequest()
             },

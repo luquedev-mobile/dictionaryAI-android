@@ -1,7 +1,6 @@
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
-    alias(libs.plugins.kotlinxSerialization)
 }
 
 java {
@@ -16,5 +15,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-    implementation(libs.kotlinx.serialization.json)
+    implementation(project(":domain"))
+    implementation(libs.kotlinx.coroutines.core)
 }

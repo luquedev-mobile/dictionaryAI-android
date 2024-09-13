@@ -1,4 +1,4 @@
-package com.devluque.dictionaryai.domain
+package com.devluque.domain
 
 data class WordDetailItem(
     val meanings: List<Meaning>? = null,

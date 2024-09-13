@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "dictionaryAI"
 include(":app")
 include(":domain")
+include(":data")
+include(":usecases")

@@ -1,4 +1,4 @@
-package com.devluque.dictionaryai.framework.remote.common
+package com.devluque.domain.remote.common
 
 import kotlinx.serialization.Serializable
 

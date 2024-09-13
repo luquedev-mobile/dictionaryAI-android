@@ -1,4 +1,4 @@
-package com.devluque.dictionaryai.domain
+package com.devluque.domain
 
 data class Word (
     val word: String = ""

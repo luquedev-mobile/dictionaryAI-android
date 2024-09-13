@@ -1,7 +1,7 @@
 package com.devluque.dictionaryai.framework.remote
 
 import com.devluque.dictionaryai.BuildConfig
-import com.devluque.dictionaryai.Result
+import com.devluque.domain.Result
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType

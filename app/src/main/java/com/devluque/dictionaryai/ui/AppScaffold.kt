@@ -21,8 +21,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.devluque.dictionaryai.App
-import com.devluque.dictionaryai.data.AiRepository
-import com.devluque.dictionaryai.data.WordsRepository
+import com.devluque.data.AiRepository
+import com.devluque.data.WordsRepository
 import com.devluque.dictionaryai.framework.remote.AiClient
 import com.devluque.dictionaryai.framework.WordsRoomDataSource
 import com.devluque.dictionaryai.framework.AiServerDataSource
@@ -34,11 +34,11 @@ import com.devluque.dictionaryai.ui.theme.DictionaryAITheme
 import com.devluque.dictionaryai.ui.theme.getColorScheme
 import com.devluque.dictionaryai.ui.wordDetail.WordDetail
 import com.devluque.dictionaryai.ui.wordDetail.WordDetailViewModel
-import com.devluque.dictionaryai.usecases.DeleteWordUseCase
-import com.devluque.dictionaryai.usecases.FetchGenerateWordDetailUseCase
-import com.devluque.dictionaryai.usecases.GetRecentWordsUseCase
-import com.devluque.dictionaryai.usecases.InsertWordUseCase
-import com.devluque.dictionaryai.usecases.SearchWordsUseCase
+import com.devluque.usecases.DeleteWordUseCase
+import com.devluque.usecases.FetchGenerateWordDetailUseCase
+import com.devluque.usecases.GetRecentWordsUseCase
+import com.devluque.usecases.InsertWordUseCase
+import com.devluque.usecases.SearchWordsUseCase
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 sealed class NavScreen(val route: String) {

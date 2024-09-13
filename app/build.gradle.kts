@@ -62,6 +62,8 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":usecases"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -84,5 +86,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.system.ui.controller)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.kotlinx.coroutines.android)
     ksp(libs.androidx.room.compiler)
 }

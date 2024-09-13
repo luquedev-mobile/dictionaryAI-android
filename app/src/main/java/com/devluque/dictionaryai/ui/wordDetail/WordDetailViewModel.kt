@@ -2,10 +2,10 @@ package com.devluque.dictionaryai.ui.wordDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devluque.dictionaryai.Result
-import com.devluque.dictionaryai.framework.remote.wordDetail.WordDetailRequest
-import com.devluque.dictionaryai.domain.WordDetailItem
-import com.devluque.dictionaryai.usecases.FetchGenerateWordDetailUseCase
+import com.devluque.domain.Result
+import com.devluque.domain.remote.worddetail.RemoteWordDetailRequest
+import com.devluque.domain.WordDetailItem
+import com.devluque.usecases.FetchGenerateWordDetailUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +41,7 @@ class WordDetailViewModel(
 
     data class ControlUi(
         val isGettingData: Boolean = false,
-        val historicalRequest: WordDetailRequest? = null
+        val historicalRequest: RemoteWordDetailRequest? = null
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -71,10 +71,10 @@ class WordDetailViewModel(
                 initialValue = Result.Loading
             )
 
-    fun init(wordDetailRequest: WordDetailRequest) {
+    fun init(remoteWordDetailRequest: RemoteWordDetailRequest) {
         controlUi.update {
             it.copy(
-                historicalRequest = wordDetailRequest,
+                historicalRequest = remoteWordDetailRequest,
                 isGettingData = true
             )
         }
