@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -22,5 +23,15 @@ dependencyResolutionManagement {
 rootProject.name = "dictionaryAI"
 include(":app")
 include(":domain")
-include(":data")
-include(":usecases")
+include(":feature")
+include(":feature:search")
+include(":feature:wordDetail")
+include(":feature:common")
+include(":framework")
+include(":feature:wordDetail:entities")
+include(":feature:wordDetail:data")
+include(":feature:wordDetail:usecases")
+include(":framework:core")
+include(":feature:search:data")
+include(":feature:search:entities")
+include(":feature:search:usecases")

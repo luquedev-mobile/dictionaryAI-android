@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="dictionaryAI.feature.main" target="17" />
+      <module name="dictionaryAI.feature.test" target="17" />
+      <module name="dictionaryAI.feature.worddetail.data.main" target="17" />
+      <module name="dictionaryAI.feature.worddetail.data.test" target="17" />
+      <module name="dictionaryAI.feature.worddetail.entities" target="17" />
+      <module name="dictionaryAI.feature.worddetail.entities.main" target="17" />
+      <module name="dictionaryAI.feature.worddetail.entities.test" target="17" />
+      <module name="dictionaryAI.framework.main" target="17" />
+      <module name="dictionaryAI.framework.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
