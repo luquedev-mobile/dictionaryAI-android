@@ -14,28 +14,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.devluque.common.theme.DictionaryAITheme
-import com.devluque.core.network.AiClient
-import com.devluque.data.AiRepository
-import com.devluque.data.WordsRepository
-import com.devluque.search.framework.WordsRoomDataSource
 import com.devluque.search.ui.SearchScreen
-import com.devluque.search.ui.SearchViewModel
-import com.devluque.usecases.FetchGenerateWordDetailUseCase
-import com.devluque.usecases.GetRecentWordsUseCase
-import com.devluque.usecases.InsertWordUseCase
-import com.devluque.usecases.SearchWordsUseCase
-import com.devluque.worddetail.framework.AiServerDataSource
-import com.devluque.worddetail.framework.AiService
 import com.devluque.worddetail.ui.WordDetail
-import com.devluque.worddetail.ui.WordDetailViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.koin.androidx.compose.koinViewModel
 
 sealed class NavScreen(val route: String) {
     data object Search : NavScreen("search")
@@ -78,34 +66,13 @@ fun Navigation() {
                         startDestination = NavScreen.Search.route
                     ) {
                         composable(NavScreen.Search.route) {
-                            val wordsRepository = WordsRepository(
-                                localDataSource = WordsRoomDataSource(
-                                    application.db.wordsDao
-                                )
-                            )
-
                             showBottomBar = true
                             topAppBar = { com.devluque.common.topBar.TopAppBarOvalShape() }
                             SearchScreen(
                                 onSearch = {
                                     navController.navigate(NavScreen.WordDetail.createRoute(it))
                                 },
-                                vm = viewModel {
-                                    SearchViewModel(
-                                        getRecentWordsUseCase = GetRecentWordsUseCase(
-                                            wordsRepository
-                                        ),
-                                        searchWordsUseCase = SearchWordsUseCase(
-                                            wordsRepository
-                                        ),
-                                        insertWordUseCase = InsertWordUseCase(
-                                            wordsRepository
-                                        ),
-                                        deleteWordUseCase = com.devluque.usecases.DeleteWordUseCase(
-                                            wordsRepository
-                                        )
-                                    )
-                                }
+                                vm = koinViewModel()
                             )
                         }
 
@@ -126,20 +93,7 @@ fun Navigation() {
                             }
                             WordDetail(
                                 word = word,
-                                viewModel = viewModel {
-                                    WordDetailViewModel(
-                                        fetchGenerateWordDetailUseCase = FetchGenerateWordDetailUseCase(
-                                            AiRepository(
-                                                aiRemoteDataSource = AiServerDataSource(
-                                                    AiClient(
-                                                        apiKey = BuildConfig.API_KEY,
-                                                        service = AiService::class.java
-                                                    ).instance
-                                                )
-                                            )
-                                        )
-                                    )
-                                }
+                                viewModel = koinViewModel()
                             )
                         }
                     }

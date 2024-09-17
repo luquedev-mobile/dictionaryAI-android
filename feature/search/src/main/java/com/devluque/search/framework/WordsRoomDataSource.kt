@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
-class WordsRoomDataSource(private val wordsDao: WordsDao) : WordsLocalDataSource {
+internal class WordsRoomDataSource(private val wordsDao: WordsDao) : WordsLocalDataSource {
     override suspend fun insertWord(word: String) = wordsDao.insertWord(word.toDbWord())
     override fun searchWords(query: String): Flow<List<Word>> = wordsDao.searchWords(query).map { dbWords ->
         dbWords?.map { dbWord: DbWord ->

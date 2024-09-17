@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devluque.common.Screen
 import com.devluque.common.speaker.Speaker
 import com.devluque.domain.SpeakerModer
 import com.devluque.entities.Meaning
@@ -47,7 +48,7 @@ fun WordDetail(
         }
     }
 
-    com.devluque.common.Screen(
+    Screen(
         state = state,
         onClickRetry = { wordDetailState.lastRequest.value.invoke() }
     ) { data ->

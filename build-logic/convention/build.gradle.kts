@@ -49,5 +49,13 @@ gradlePlugin {
             id = "com.devluque.jvm.retrofit"
             implementationClass = "JvmRetrofitConventionPlugin"
         }
+        register("diLibrary") {
+            id = "com.devluque.di.library"
+            implementationClass = "DiLibraryConventionPlugin"
+        }
+        register("diLibraryCompose") {
+            id = "com.devluque.di.library.compose"
+            implementationClass = "DiLibraryComposeConventionPlugin"
+        }
     }
 }

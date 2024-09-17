@@ -22,7 +22,7 @@ class AiClient <T>(
         ignoreUnknownKeys = true
     }
 
-    val instance = Retrofit.Builder()
+    val instance: T = Retrofit.Builder()
         .baseUrl("https://generativelanguage.googleapis.com/v1beta/")
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))

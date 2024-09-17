@@ -1,6 +1,7 @@
 package com.devluque.common
 
 import androidx.compose.runtime.Composable
+import com.devluque.common.error.ErrorScreen
 import com.devluque.common.loading.Loading
 import com.devluque.domain.Result
 
@@ -12,15 +13,17 @@ fun <T> Screen(
 ) {
     when(state) {
         is Result.Error -> {
-            com.devluque.common.error.ErrorScreen(
+            ErrorScreen(
                 onClickRetry = onClickRetry
             )
         }
         Result.Loading -> {
-            com.devluque.common.loading.Loading()
+            Loading()
         }
         is Result.Success -> {
             content(state.data)
         }
+
+        Result.Idle -> {}
     }
 }

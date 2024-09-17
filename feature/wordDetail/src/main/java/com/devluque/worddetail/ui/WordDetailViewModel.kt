@@ -64,7 +64,7 @@ class WordDetailViewModel(
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = Result.Loading
+                initialValue = Result.Idle
             )
 
     fun init(remoteWordDetailRequest: RemoteWordDetailRequest) {

@@ -5,5 +5,5 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [DbWord::class], version = 1, exportSchema = false)
 abstract class DictionaryDataBase: RoomDatabase() {
-    abstract val wordsDao: WordsDao
+    abstract fun wordsDao(): WordsDao
 }

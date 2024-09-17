@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("com.devluque.android.application")
     id("com.devluque.android.application.compose")
+    id("com.devluque.di.library.compose")
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.ksp)
 }
