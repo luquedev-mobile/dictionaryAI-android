@@ -13,8 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-internal class AiServerDataSource(
+internal class AiServerDataSource @Inject constructor(
     private val aiService: AiService
 ) : AiRemoteDataSource {
     override fun generateWordDetail(

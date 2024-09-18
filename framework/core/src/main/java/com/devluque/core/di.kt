@@ -1,21 +1,23 @@
 package com.devluque.core
 
-import android.content.Context
+import android.app.Application
 import androidx.room.Room
 import com.devluque.core.database.DictionaryDataBase
-import com.devluque.core.network.AiClient
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val diFrameworkCoreModule = module {
-    single {
-        Room.databaseBuilder(
-            get(),
-            DictionaryDataBase::class.java,
-            "dictionary-db"
-        ).build()
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+internal object FrameworkCoreModule {
 
-    factory { get<DictionaryDataBase>().wordsDao() }
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application) = Room.databaseBuilder(app, DictionaryDataBase::class.java, "dictionary.db").build()
+
+    @Provides
+    fun provideWordsDao(db: DictionaryDataBase) = db.wordsDao()
+
 }

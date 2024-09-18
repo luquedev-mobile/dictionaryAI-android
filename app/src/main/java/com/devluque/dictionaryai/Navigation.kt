@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +24,6 @@ import com.devluque.common.theme.DictionaryAITheme
 import com.devluque.search.ui.SearchScreen
 import com.devluque.worddetail.ui.WordDetail
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import org.koin.androidx.compose.koinViewModel
 
 sealed class NavScreen(val route: String) {
     data object Search : NavScreen("search")
@@ -43,7 +43,6 @@ fun Navigation() {
     systemUiController.setStatusBarColor(com.devluque.common.theme.getColorScheme().primary)
     var showBottomBar by remember { mutableStateOf(true) }
     var topAppBar by remember { mutableStateOf<@Composable () -> Unit>({}) }
-    val application = LocalContext.current.applicationContext as App
 
     DictionaryAITheme(
         dynamicColor = false
@@ -72,7 +71,7 @@ fun Navigation() {
                                 onSearch = {
                                     navController.navigate(NavScreen.WordDetail.createRoute(it))
                                 },
-                                vm = koinViewModel()
+                                vm = hiltViewModel()
                             )
                         }
 
@@ -82,7 +81,6 @@ fun Navigation() {
                                 type = NavType.StringType
                             })
                         ) { backStackEntry ->
-                            val context = LocalContext.current
                             showBottomBar = false
                             val word =
                                 requireNotNull(backStackEntry.arguments?.getString(NavArgs.Word.key))
@@ -93,7 +91,7 @@ fun Navigation() {
                             }
                             WordDetail(
                                 word = word,
-                                viewModel = koinViewModel()
+                                viewModel = hiltViewModel()
                             )
                         }
                     }

@@ -3,8 +3,9 @@ package com.devluque.data
 import com.devluque.data.datasource.WordsLocalDataSource
 import com.devluque.entities.Word
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class WordsRepository(
+class WordsRepository @Inject constructor(
     private val localDataSource: WordsLocalDataSource
 ) {
     suspend fun insertWord(word: String) = localDataSource.insertWord(word)

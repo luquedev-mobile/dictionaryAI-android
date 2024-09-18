@@ -5,8 +5,9 @@ import com.devluque.domain.Result
 import com.devluque.entities.WordDetailItem
 import com.devluque.entities.RemoteWordDetailRequest
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class AiRepository(
+class AiRepository @Inject constructor(
     private val aiRemoteDataSource: AiRemoteDataSource
 ) {
     fun generateWordDetail(

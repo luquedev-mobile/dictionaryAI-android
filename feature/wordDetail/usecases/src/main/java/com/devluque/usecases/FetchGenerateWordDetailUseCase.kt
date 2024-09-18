@@ -5,7 +5,8 @@ import com.devluque.domain.Result
 import com.devluque.entities.WordDetailItem
 import com.devluque.entities.RemoteWordDetailRequest
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class FetchGenerateWordDetailUseCase(private val aiRepository: AiRepository) {
+class FetchGenerateWordDetailUseCase @Inject constructor(private val aiRepository: AiRepository) {
     operator fun invoke(request: RemoteWordDetailRequest): Flow<Result<WordDetailItem>> = aiRepository.generateWordDetail(request)
 }

@@ -7,6 +7,7 @@ import com.devluque.domain.SpeakerModer
 import com.devluque.entities.RemoteWordDetailRequest
 import com.devluque.entities.WordDetailItem
 import com.devluque.usecases.FetchGenerateWordDetailUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +20,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class WordDetailViewModel(
+@HiltViewModel
+class WordDetailViewModel @Inject constructor(
     private val fetchGenerateWordDetailUseCase: FetchGenerateWordDetailUseCase
 ) : ViewModel() {
     private val controlUi = MutableStateFlow(ControlUi())
