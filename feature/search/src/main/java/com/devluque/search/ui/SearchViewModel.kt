@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    getRecentWordsUseCase: GetRecentWordsUseCase,
+    private val getRecentWordsUseCase: GetRecentWordsUseCase,
     private val searchWordsUseCase: SearchWordsUseCase,
     private val insertWordUseCase: InsertWordUseCase,
     private val deleteWordUseCase: DeleteWordUseCase,

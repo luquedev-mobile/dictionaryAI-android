@@ -3,3 +3,7 @@ plugins {
     id("com.devluque.di.library")
 }
 
+dependencies {
+    testImplementation(project(":test:unit"))
+}
+

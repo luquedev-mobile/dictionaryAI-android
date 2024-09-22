@@ -6,3 +6,9 @@ plugins {
 android {
     namespace = "com.devluque.worddetail"
 }
+
+dependencies {
+    testImplementation(project(":test:unit"))
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+}

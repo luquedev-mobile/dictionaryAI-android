@@ -10,6 +10,7 @@ class WordsRepository @Inject constructor(
 ) {
     suspend fun insertWord(word: String) = localDataSource.insertWord(word)
     fun searchWords(query: String): Flow<List<Word>> = localDataSource.searchWords(query)
-    val getRecentWords: Flow<List<Word>> = localDataSource.getRecentWords
+    val getRecentWords: Flow<List<Word>>
+        get() = localDataSource.getRecentWords
     suspend fun deleteWord(word: String) = localDataSource.deleteWord(word)
 }
