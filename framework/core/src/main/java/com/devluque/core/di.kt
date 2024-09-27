@@ -7,17 +7,33 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object FrameworkCoreModule {
-
-    @Provides
-    @Singleton
-    fun provideDatabase(app: Application) = Room.databaseBuilder(app, DictionaryDataBase::class.java, "dictionary.db").build()
+object FrameworkCoreModule {
 
     @Provides
     fun provideWordsDao(db: DictionaryDataBase) = db.wordsDao()
+
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object FrameworkCoreExtrasModule {
+
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application) = Room.databaseBuilder(
+        app,
+        DictionaryDataBase::class.java,
+        "dictionary.db"
+    ).build()
+
+    @Provides
+    @Singleton
+    @Named("apiUrl")
+    fun provideApiUrl(): String = "https://generativelanguage.googleapis.com/v1beta/"
 
 }

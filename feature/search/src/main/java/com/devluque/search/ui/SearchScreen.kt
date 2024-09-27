@@ -37,11 +37,13 @@ import androidx.compose.ui.unit.sp
 import com.devluque.common.theme.getColorScheme
 import com.devluque.entities.Word
 import com.devluque.search.R
+import com.devluque.search.ui.TEST_TAGS.LIST_WORDS_
 
 object TEST_TAGS {
     const val SEARCH_BUTTON_TAG = "SEARCH_BUTTON"
     const val BASIC_TEXT_FIELD_TAG = "BASIC_TEXT_FIELD"
     const val BUTTON_DELETE_TAG = "BUTTON_DELETE"
+    const val LIST_WORDS_ = "list_words"
 }
 
 @Composable
@@ -231,6 +233,7 @@ private fun Item(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick(word) }
+            .testTag("${LIST_WORDS_}$word")
     ) {
         Text(
             text = word

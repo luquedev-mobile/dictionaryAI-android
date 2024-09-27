@@ -28,8 +28,6 @@ inline fun <reified T> ManagerJsonFile(
 
             getContent(request)
         } catch (e: Exception) {
-            val a = e
-            val b = a
             errorToLoadContent = true
         }
     }

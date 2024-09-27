@@ -29,11 +29,13 @@ import com.devluque.entities.Meaning
 import com.devluque.entities.RemoteWordDetailRequest
 import com.devluque.entities.WordDetailItem
 import com.devluque.worddetail.ui.TESTS_TAGS.SWIPE_TAG
+import com.devluque.worddetail.ui.TESTS_TAGS.TITLE_TAG
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 object TESTS_TAGS {
     const val SWIPE_TAG = "swipe"
+    const val TITLE_TAG = "title_tag"
 }
 
 @Composable
@@ -104,7 +106,6 @@ fun WordDetailScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(24.dp)
-                    //.testTag(SWIPE_TAG)
             ) {
                 item {
                     Text(
@@ -114,6 +115,7 @@ fun WordDetailScreen(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .testTag(TITLE_TAG)
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Speaker { mode ->

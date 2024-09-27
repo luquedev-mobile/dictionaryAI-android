@@ -20,5 +20,12 @@ internal abstract class DataSourceModule {
 @InstallIn(SingletonComponent::class)
 object AiClientModule {
     @Provides
-    fun provideAiClient(@Named("apiKey") apiKey: String): AiService = AiClient(apiKey, AiService::class.java).instance
+    fun provideAiClient(
+        @Named("apiKey") apiKey: String,
+        @Named("apiUrl") apiUrl: String
+    ): AiService = AiClient(
+        apiKey,
+        apiUrl,
+        AiService::class.java
+    ).instance
 }

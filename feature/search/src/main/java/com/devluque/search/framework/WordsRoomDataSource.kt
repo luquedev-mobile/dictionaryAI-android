@@ -12,7 +12,7 @@ import javax.inject.Inject
 internal class WordsRoomDataSource @Inject constructor(private val wordsDao: WordsDao) : WordsLocalDataSource {
     override suspend fun insertWord(word: String) = wordsDao.insertWord(word.toDbWord())
 
-    override fun searchWords(query: String): Flow<List<Word>> = wordsDao.searchWords(query).map { dbWords ->
+    override fun searchWords(query: String): Flow<List<Word>> = wordsDao.searchWords(query.trimEnd().trimStart()).map { dbWords ->
         dbWords?.map { dbWord: DbWord ->
             dbWord.toDomain()
         }

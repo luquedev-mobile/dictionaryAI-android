@@ -1,0 +1,39 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"meanings\": [{\"example_english\": \"This game has different tiers of rewards.\", \"example_spanish\": \"Este juego tiene diferentes niveles de recompensas.\", \"explanation\": \"En este caso, \\\"tier\\\" se utiliza como un sustantivo para referirse a un nivel o rango dentro de un sistema, especialmente en juegos o programas de recompensas. También se puede traducir como \\\"escalón\\\" o \\\"estrato\\\". \", \"mean\": \"nivel\", \"partOfSpeech\": \"sustantivo\"}, {\"example_english\": \"He's in the top tier of players in this league.\", \"example_spanish\": \"Él está en el nivel superior de jugadores en esta liga.\", \"explanation\": \"\\\"Tier\\\" aquí funciona como un sustantivo que define un grupo de jugadores que comparten habilidades o clasificación similar. Puede ser traducido también como \\\"categoría\\\" o \\\"clase\\\". \", \"mean\": \"categoría\", \"partOfSpeech\": \"sustantivo\"}], \"word\": \"Tier\"}\n"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0,
+      "safetyRatings": [
+        {
+          "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+          "probability": "NEGLIGIBLE"
+        },
+        {
+          "category": "HARM_CATEGORY_HATE_SPEECH",
+          "probability": "NEGLIGIBLE"
+        },
+        {
+          "category": "HARM_CATEGORY_HARASSMENT",
+          "probability": "NEGLIGIBLE"
+        },
+        {
+          "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+          "probability": "NEGLIGIBLE"
+        }
+      ]
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 18,
+    "candidatesTokenCount": 208,
+    "totalTokenCount": 226
+  }
+}

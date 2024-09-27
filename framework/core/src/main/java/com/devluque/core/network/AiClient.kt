@@ -12,6 +12,7 @@ import java.net.SocketTimeoutException
 
 class AiClient <T>(
     private val apiKey: String,
+    apiUrl: String,
     service: Class<T>
 ) {
     private val okHttpClient = okhttp3.OkHttpClient.Builder()
@@ -23,7 +24,7 @@ class AiClient <T>(
     }
 
     val instance: T = Retrofit.Builder()
-        .baseUrl("https://generativelanguage.googleapis.com/v1beta/")
+        .baseUrl(apiUrl)
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()

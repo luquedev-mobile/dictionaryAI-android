@@ -26,19 +26,19 @@
           </targets>
         </DialogSelection>
       </SelectionState>
-      <SelectionState runConfigName="whenNameFileIsCorrect_thenInitIsCalled()">
+      <SelectionState runConfigName="click_search_word_navigates_to_wordDetail_and_back_the_recent_word_is_appear()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenErrorState_thenShowError()">
+      <SelectionState runConfigName="click_search_word_navigates_to_wordDetail_and_word_save_in_db()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenErrorStateFirstTimeAndTryAgain_thenInitIsCalled()">
+      <SelectionState runConfigName="words_not_repeat_in_database()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenSwipeToRefresh_thenRefreshIsCalled()">
+      <SelectionState runConfigName="show_all_recent_words_searched()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="WordDetailScreenTest">
+      <SelectionState runConfigName="AppInstrumentedTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
