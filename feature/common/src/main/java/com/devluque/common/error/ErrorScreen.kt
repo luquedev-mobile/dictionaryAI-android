@@ -13,12 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devluque.common.R
+import com.devluque.common.TESTS_TAGS.BUTTON_TRY_AGAIN
+import com.devluque.common.TESTS_TAGS.ERROR_SCREEN
 
 @Composable
 fun ErrorScreen(
@@ -29,7 +32,8 @@ fun ErrorScreen(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .testTag(ERROR_SCREEN),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -64,6 +68,8 @@ fun ErrorScreen(
         }
         if (mustShowRetryButton) {
             Button(
+                modifier = Modifier
+                    .testTag(BUTTON_TRY_AGAIN),
                 onClick = onClickRetry,
                 colors = ButtonDefaults.buttonColors().copy(
                     containerColor = com.devluque.common.theme.getColorScheme().primaryContainer,

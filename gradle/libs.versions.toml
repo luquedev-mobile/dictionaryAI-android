@@ -25,6 +25,7 @@ hilt = "2.51.1"
 androidxHiltNavigationCompose = "1.2.0"
 mockitoKotlin = "3.2.0"
 mockitoInline = "5.0.0"
+test = "1.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +64,9 @@ mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", versio
 mockito-inline = {group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInline"}
 kotlinx-coroutines-test =  { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 turbine = { group = "app.cash.turbine", name = "turbine", version = "1.1.0" }
+androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "test" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "test" }
+
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

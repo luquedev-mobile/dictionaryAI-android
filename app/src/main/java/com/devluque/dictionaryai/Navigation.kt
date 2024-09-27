@@ -13,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.devluque.common.theme.DictionaryAITheme
 import com.devluque.search.ui.SearchScreen
-import com.devluque.worddetail.ui.WordDetail
+import com.devluque.worddetail.ui.WordDetailScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 sealed class NavScreen(val route: String) {
@@ -89,7 +88,7 @@ fun Navigation() {
                                     navController.popBackStack()
                                 }
                             }
-                            WordDetail(
+                            WordDetailScreen(
                                 word = word,
                                 viewModel = hiltViewModel()
                             )

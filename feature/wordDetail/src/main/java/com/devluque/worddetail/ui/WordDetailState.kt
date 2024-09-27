@@ -32,7 +32,8 @@ class WordDetailState(
     @Composable
     fun GetWordDetailRequest(
         word: String,
-        getContent: (RemoteWordDetailRequest?) -> Unit
+        fileName: String,
+        getContent: (RemoteWordDetailRequest?) -> Unit,
     ) {
         ManagerJsonFile<RemoteWordDetailRequest>(
             getContent = { wordDetailRequest ->
@@ -49,7 +50,7 @@ class WordDetailState(
 
                 getContent(wordDetailRequest)
             },
-            fileName = "wordDetailRequest.json"
+            fileName = fileName
         )
     }
 

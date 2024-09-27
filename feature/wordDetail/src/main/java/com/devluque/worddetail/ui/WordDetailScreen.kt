@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,26 +23,62 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devluque.common.Screen
 import com.devluque.common.speaker.Speaker
+import com.devluque.domain.Result
 import com.devluque.domain.SpeakerModer
 import com.devluque.entities.Meaning
+import com.devluque.entities.RemoteWordDetailRequest
+import com.devluque.entities.WordDetailItem
+import com.devluque.worddetail.ui.TESTS_TAGS.SWIPE_TAG
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
-@OptIn(ExperimentalMaterial3Api::class)
+object TESTS_TAGS {
+    const val SWIPE_TAG = "swipe"
+}
+
 @Composable
-fun WordDetail(
+fun WordDetailScreen(
     word: String,
     viewModel: WordDetailViewModel
 ) {
     val state by viewModel.uiState.collectAsState()
+    WordDetailScreen(
+        word = word,
+        event = viewModel.events,
+        speak = { text, speakerModer ->
+            viewModel.speak(text, speakerModer)
+        },
+        init = {
+            viewModel.init(it)
+        },
+        refresh = {
+            viewModel.refresh()
+        },
+        state = state
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordDetailScreen(
+    word: String = "",
+    event: Flow<WordDetailViewModel.WordDetailEvent> = emptyFlow(),
+    speak: (String, SpeakerModer) -> Unit,
+    init: (RemoteWordDetailRequest) -> Unit,
+    refresh: () -> Unit,
+    fileName: String = "wordDetailRequest.json",
+    state: Result<WordDetailItem>
+) {
     val wordDetailState: WordDetailState = rememberWordDetailState(
-        events = viewModel.events
+        events = event
     )
 
     wordDetailState.TextToSpeechEvent()
 
-    wordDetailState.GetWordDetailRequest(word) { wordDetailRequest ->
+    wordDetailState.GetWordDetailRequest(word, fileName = fileName) { wordDetailRequest ->
         wordDetailRequest?.let {
             wordDetailState.lastRequest.value = {
-                viewModel.init(it)
+                init(it)
             }.also {
                 it.invoke()
             }
@@ -55,12 +92,19 @@ fun WordDetail(
         PullToRefreshBox(
             isRefreshing = false,
             onRefresh = {
-                viewModel.refresh()
-            }
+                wordDetailState.lastRequest.value = {
+                    refresh()
+                }.also {
+                    it.invoke()
+                }
+            },
+            modifier = Modifier
+                .testTag(SWIPE_TAG)
         ) {
             LazyColumn(
                 modifier = Modifier
                     .padding(24.dp)
+                    //.testTag(SWIPE_TAG)
             ) {
                 item {
                     Text(
@@ -73,7 +117,7 @@ fun WordDetail(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Speaker { mode ->
-                        viewModel.speak(data.word, mode)
+                        speak(data.word, mode)
                     }
                     Spacer(modifier = Modifier.height(24.dp))
                 }
@@ -85,7 +129,7 @@ fun WordDetail(
                             wordDetailState = wordDetailState,
                             speaker = { mode ->
                                 it.exampleEnglish?.let { speakExampleEnglish ->
-                                    viewModel.speak(speakExampleEnglish, mode)
+                                    speak(speakExampleEnglish, mode)
                                 }
                             }
                         )

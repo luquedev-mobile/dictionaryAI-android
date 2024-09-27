@@ -21,10 +21,12 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,16 +38,44 @@ import com.devluque.common.theme.getColorScheme
 import com.devluque.entities.Word
 import com.devluque.search.R
 
+object TEST_TAGS {
+    const val SEARCH_BUTTON_TAG = "SEARCH_BUTTON"
+    const val BASIC_TEXT_FIELD_TAG = "BASIC_TEXT_FIELD"
+    const val BUTTON_DELETE_TAG = "BUTTON_DELETE"
+}
+
 @Composable
 fun SearchScreen(
     onSearch: (String) -> Unit,
     vm: SearchViewModel
 ) {
     val words = vm.uiState.collectAsState()
+    SearchScreen(
+        onSearchMeaningOfWord = { wordToGetMeaning ->
+            vm.insertWord(
+                wordToGetMeaning
+            )
+            onSearch(wordToGetMeaning)
+        },
+        searchWords = {
+            vm.searchWords(it)
+        },
+        onDelete = vm::deleteWord,
+        words = words.value
+    )
+}
+
+@Composable
+fun SearchScreen(
+    onSearchMeaningOfWord: (String) -> Unit,
+    searchWords: (String) -> Unit,
+    onDelete: (String) -> Unit,
+    words: List<Word>,
+) {
     val searchState = rememberSearchState()
 
     searchState.SearchTextChange {
-        vm.searchWords(it)
+        searchWords(it)
     }
 
     Column(
@@ -59,13 +89,10 @@ fun SearchScreen(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                vm.insertWord(
-                    searchState.searchText.value
-                )
-                onSearch(searchState.searchText.value)
+                onSearchMeaningOfWord(searchState.searchText.value)
             }
         )
-        if (words.value.isNotEmpty()) {
+        if (words.isNotEmpty()) {
             Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = "Búsquedas recientes",
@@ -77,16 +104,16 @@ fun SearchScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             LazyColumn {
-                items(words.value.size) { index ->
+                items(words.size) { index ->
                     WordItem(
-                        word = words.value[index],
+                        word = words[index],
                         onDelete = {
-                            vm.deleteWord(it.word)
+                            onDelete(it.word)
                         },
                         onSearch = {
-                            onSearch(it)
+                            onSearchMeaningOfWord(it)
                         },
-                        mustShowDivider = index != words.value.size - 1
+                        mustShowDivider = index != words.size - 1
                     )
                 }
             }
@@ -106,7 +133,8 @@ fun SearchButton(
             containerColor = getColorScheme().primary,
             contentColor = getColorScheme().onPrimary
         ),
-        modifier = modifier,
+        modifier = modifier
+            .testTag(TEST_TAGS.SEARCH_BUTTON_TAG),
         enabled = isEnabled
     ) {
         Text(text = "Buscar")
@@ -126,9 +154,10 @@ private fun Search(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = com.devluque.common.theme.getColorScheme().surface,
+                color = getColorScheme().surface,
                 shape = RoundedCornerShape(8.dp)
-            ),
+            )
+            .testTag(TEST_TAGS.BASIC_TEXT_FIELD_TAG),
         textStyle = TextStyle(
             color = com.devluque.common.theme.getColorScheme().onSurface // Texto visible en ambos temas
         ),
@@ -182,6 +211,7 @@ private fun WordItem(
                         .clickable {
                             onDelete(word)
                         }
+                        .testTag("${TEST_TAGS.BUTTON_DELETE_TAG}${word.word}")
                 )
             }
         )

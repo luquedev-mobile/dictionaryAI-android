@@ -27,7 +27,9 @@ inline fun <reified T> ManagerJsonFile(
                 Json.decodeFromString<T>(jsonStringRequest)
 
             getContent(request)
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            val a = e
+            val b = a
             errorToLoadContent = true
         }
     }

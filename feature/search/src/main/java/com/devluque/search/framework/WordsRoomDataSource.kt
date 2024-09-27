@@ -26,14 +26,16 @@ internal class WordsRoomDataSource @Inject constructor(private val wordsDao: Wor
     private fun String.toDbWord(): DbWord {
         return DbWord(
             word = this
+                .trimEnd()
+                .trimStart()
                 .lowercase()
-                .replaceFirst(this.first(), this.first().uppercaseChar())
         )
     }
 
     private fun DbWord.toDomain(): Word {
         return Word(
             word = this.word
+                .replaceFirst(this.word.first(), this.word.first().uppercaseChar(),true)
         )
     }
 }
