@@ -1,5 +1,5 @@
 # Dictionary AI
-Dictionary AI es una aplicación de Android que te permite conocer el significado de frases o palabras en inglés y proporciona una explicación en español. Esta app utiliza Gemini como modelo de inteligencia artificial para realizar las traducciones y explicaciones, aplicando una arquitectura limpia y principios de desarrollo de software sólidos.
+Dictionary AI es una aplicación de Android que te permite conocer el significado de frases o palabras en inglés y proporciona una explicación en español. Esta app utilidza Gemini como modelo de inteligencia artificial para realizar las traducciones y explicaciones, aplicando una arquitectura limpia y principios de desarrollo de software sólidos.
 
 ## Capturas de Pantalla
 
