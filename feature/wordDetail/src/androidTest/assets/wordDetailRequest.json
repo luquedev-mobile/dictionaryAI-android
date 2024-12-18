@@ -1,0 +1,91 @@
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": ""
+        }
+      ],
+      "role": "user"
+    }
+  ],
+  "generationConfig": {
+    "response_mime_type": "application/json",
+    "response_schema": {
+      "type": "object",
+      "nullable": "false",
+      "properties": {
+        "word": {
+          "type": "STRING"
+        },
+        "meanings": {
+          "type": "array",
+          "nullable": "false",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mean": {
+                "type": "STRING",
+                "description": "traduccion de la palabra o de la frase al español"
+              },
+              "example_english": {
+                "type": "STRING",
+                "description": "ejemplo en inglés que incluye la palabra dentro del campo 'word'"
+              },
+              "example_spanish": {
+                "type": "STRING",
+                "description": "traducción del campo 'example_english'"
+              },
+              "explanation": {
+                "type": "STRING",
+                "description": "explicación del significado del campo 'mean' en español y si es un verbo indicar el tiempo en el que está e indicar sus otros tiempos verbales"
+              },
+              "partOfSpeech": {
+                "type": "STRING",
+                "description": "categoría gramatical del campo 'mean'"
+              }
+            },
+            "required": [
+              "mean",
+              "example_english",
+              "example_spanish",
+              "explanation",
+              "partOfSpeech"
+            ]
+          }
+        }
+      },
+      "required": [
+        "word",
+        "meanings"
+      ]
+    },
+    "temperature": 2.0
+  },
+  "systemInstruction": {
+    "parts": [
+      {
+        "text": "eres entrenador de idioma para un estudiante que habla español"
+      }
+    ],
+    "role": "model"
+  },
+  "safetySettings": [
+    {
+      "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+      "threshold": "BLOCK_NONE"
+    }
+  ]
+}
